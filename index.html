@@ -1,192 +1,1033 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Aashima Gupta | Data Engineer</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aashima Gupta | Data Engineer</title>
+<meta name="description" content="Aashima Gupta is a Melbourne-based, Databricks-certified data engineer with 4+ years on Databricks and Azure, plus hands-on Microsoft Fabric, skilled in Power BI, SQL, BigQuery and star schema modelling. Open to Data Analyst and Data Engineer roles in Melbourne.">
+<meta name="theme-color" content="#24160F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2324160F'/%3E%3Ccircle cx='32' cy='32' r='16' fill='%23EBCF7E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bronze-bg: #24160F;
+    --bronze-ink: #F2E2CF;
+    --bronze-accent: #E09A5A;
+    --silver-bg: #CBD2D9;
+    --silver-ink: #1A2027;
+    --silver-accent: #3B5266;
+    --gold-bg: #EBCF7E;
+    --gold-ink: #2B2008;
+    --gold-accent: #6B4700;
+    --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+    --body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    --gutter: clamp(1.25rem, 5vw, 4rem);
+    --max: 72rem;
+    --nav-h: 64px;
+    --bar-h: 96px;
+  }
+  @media (max-width: 720px) { :root { --bar-h: 84px; } }
+
+  /* chrome (nav + pipeline bar) follows the active layer */
+  body { --chrome-bg: #1B100A; --chrome-ink: #F2E2CF; --accent: #E09A5A; }
+  body[data-layer="silver"] { --chrome-bg: #B8C1CA; --chrome-ink: #1A2027; --accent: #3B5266; }
+  body[data-layer="gold"]   { --chrome-bg: #DCBF63; --chrome-ink: #2B2008; --accent: #6B4700; }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    overflow: hidden;
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    background: var(--bronze-bg);
+    color: var(--bronze-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.95; margin: 0; letter-spacing: 0.005em; }
+  p { margin: 0; }
+  a { color: inherit; }
+  ul, ol { margin: 0; padding: 0; list-style: none; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: 2px; }
+
+  .skip { position: fixed; left: -999px; top: 0.5rem; background: #fff; color: #000; padding: 0.5rem 1rem; z-index: 100; }
+  .skip:focus { left: 0.5rem; }
+
+  /* ---------- top: progress + nav ---------- */
+  .progress { position: fixed; inset: 0 0 auto 0; height: 4px; z-index: 60; background: rgba(0,0,0,0.3); }
+  .progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #B87333 0%, #B87333 25%, #AEB8C2 50%, #EBCF7E 75%, #EBCF7E 100%); background-size: 100vw 100%; transition: width 0.5s ease; }
+
+  .nav {
+    position: fixed; top: 4px; left: 0; right: 0; height: calc(var(--nav-h)); z-index: 50;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 0 var(--gutter);
+    background: var(--chrome-bg); color: var(--chrome-ink);
+    border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    transition: background 0.4s, color 0.4s;
+  }
+  .brand { font-family: var(--display); font-weight: 800; font-size: 1.6rem; text-decoration: none; letter-spacing: 0.04em; }
+  .nav-right { display: flex; align-items: center; gap: 1.25rem; }
+  .nav ul { display: flex; gap: 0.35rem; }
+  .nav ul a { display: block; text-decoration: none; font-size: 0.93rem; font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 999px; }
+  .nav ul a:hover { background: color-mix(in srgb, currentColor 12%, transparent); }
+  .nav ul a[aria-current="page"] { background: var(--chrome-ink); color: var(--chrome-bg); }
+  .layer-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.85rem; font-weight: 600;
+    padding: 0.3rem 0.8rem; border: 1.5px solid currentColor; border-radius: 999px; white-space: nowrap;
+  }
+  .layer-pill i { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: #B87333; transition: background 0.4s; }
+  body[data-layer="silver"] .layer-pill i { background: #7C8793; }
+  body[data-layer="gold"] .layer-pill i { background: #B8860B; }
+  @media (max-width: 1080px) { .nav ul { display: none; } }
+
+  /* ---------- stage: one slide at a time ---------- */
+  .stage { position: fixed; top: calc(var(--nav-h) + 4px); bottom: var(--bar-h); left: 0; right: 0; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; outline: none;
+    overscroll-behavior: contain;
+    transition: transform 0.5s ease, opacity 0.4s ease, visibility 0s linear 0.5s;
+  }
+  .slide[data-state="before"] { transform: translateX(-5%); opacity: 0; visibility: hidden; }
+  .slide[data-state="after"]  { transform: translateX(5%);  opacity: 0; visibility: hidden; }
+  .slide[data-state="active"] { transform: none; opacity: 1; visibility: visible; transition: transform 0.5s ease, opacity 0.4s ease, visibility 0s; }
+  .stage:not(.ready) .slide { transition: none; }
+
+  .layer { padding: clamp(2rem, 5vh, 3.5rem) var(--gutter) 4rem; }
+  .wrap { max-width: var(--max); margin: 0 auto; }
+  .layer.bronze { background: var(--bronze-bg); color: var(--bronze-ink); }
+  .layer.silver { background: var(--silver-bg); color: var(--silver-ink); }
+  .layer.gold   { background: var(--gold-bg); color: var(--gold-ink); }
+
+  .h2 { font-size: clamp(2.4rem, 5vw, 4rem); max-width: 20ch; }
+  .lede { font-size: 1.15rem; max-width: 40rem; margin-top: 1rem; }
+
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 600; font-size: 1rem; cursor: pointer;
+    padding: 0.8rem 1.5rem; border: 2px solid currentColor; border-radius: 4px; background: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .bronze .btn.primary { background: var(--bronze-accent); border-color: var(--bronze-accent); color: #24160F; }
+  .bronze .btn.primary:hover { background: #F2B27A; border-color: #F2B27A; }
+  .bronze .btn.ghost:hover { background: var(--bronze-ink); color: var(--bronze-bg); }
+
+  /* ---------- bottom: pipeline bar ---------- */
+  .bar {
+    position: fixed; left: 0; right: 0; bottom: 0; height: var(--bar-h); z-index: 50;
+    display: flex; align-items: center; gap: clamp(0.5rem, 2vw, 1.5rem);
+    padding: 0 var(--gutter) env(safe-area-inset-bottom);
+    background: var(--chrome-bg); color: var(--chrome-ink);
+    border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    transition: background 0.4s, color 0.4s;
+  }
+  .arrow {
+    flex: none; width: 46px; height: 46px; border-radius: 50%; cursor: pointer; display: grid; place-items: center;
+    background: none; border: 2px solid currentColor;
+  }
+  .arrow.next { background: var(--accent); border-color: var(--accent); color: var(--chrome-bg); }
+  .arrow:disabled { opacity: 0.3; cursor: default; }
+  .arrow svg { width: 22px; height: 22px; }
+  .track { flex: 1; display: flex; }
+  .track li { position: relative; flex: 1; text-align: center; }
+  .track li:not(:first-child)::before {
+    content: ""; position: absolute; top: calc(0.25rem + 6px); right: 50%; width: 100%; height: 0;
+    border-top: 2px dotted color-mix(in srgb, currentColor 40%, transparent);
+  }
+  .track li.done:not(:first-child)::before { border-top: 3px solid var(--accent); top: calc(0.25rem + 5px); }
+  .stop { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 0.1rem; width: 100%; background: none; border: 0; cursor: pointer; padding: 0.25rem 0.1rem; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid currentColor; background: var(--chrome-bg); transition: background 0.3s, transform 0.3s, border-color 0.3s; }
+  .done .dot { background: var(--accent); border-color: var(--accent); }
+  .stop[aria-current="step"] .dot { background: var(--accent); border-color: var(--accent); transform: scale(1.35); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .stop .lbl { font-size: 0.85rem; font-weight: 600; margin-top: 0.35rem; }
+  .stop .sub { font-size: 0.74rem; opacity: 0.75; }
+  .stop[aria-current="step"] .lbl { color: var(--accent); }
+  .stop:hover .lbl { text-decoration: underline; }
+  @media (max-width: 720px) {
+    .stop .sub { display: none; }
+    .stop .lbl { display: none; }
+    .stop[aria-current="step"] .lbl { display: block; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); white-space: nowrap; margin-top: 0.15rem; }
+    .arrow { width: 40px; height: 40px; }
+    .track { padding-bottom: 1rem; }
+  }
+
+  /* quick answers */
+  .ask {
+    position: fixed; right: 1.25rem; bottom: calc(var(--bar-h) + 1rem); z-index: 40;
+    font-weight: 600; font-size: 0.95rem; cursor: pointer;
+    padding: 0.6rem 1.1rem; border-radius: 999px; border: 2px solid var(--accent); color: var(--chrome-ink); background: var(--chrome-bg);
+    transition: background 0.4s, color 0.4s, border-color 0.4s;
+  }
+  .ask:hover { background: var(--accent); color: var(--chrome-bg); }
+  @media (max-width: 720px) {
+    .ask { right: 0.75rem; bottom: calc(var(--bar-h) + 0.6rem); width: 42px; height: 42px; padding: 0; font-size: 0; border-radius: 50%; }
+    .ask::after { content: "?"; font-size: 1.25rem; font-weight: 700; line-height: 38px; }
+  }
+  dialog { border: 0; border-radius: 10px; width: min(32rem, calc(100% - 2rem)); padding: 1.5rem; background: #24160F; color: #F2E2CF; }
+  dialog::backdrop { background: rgba(0,0,0,0.6); }
+  dialog h2 { font-size: 2.2rem; }
+  .q-list { display: grid; gap: 0.5rem; margin-top: 1.1rem; }
+  .q { text-align: left; cursor: pointer; background: none; border: 1.5px solid rgba(242,226,207,0.4); border-radius: 6px; padding: 0.6rem 0.9rem; font-weight: 500; }
+  .q:hover, .q[aria-pressed="true"] { background: #E09A5A; border-color: #E09A5A; color: #24160F; }
+  .answer { margin-top: 1.1rem; min-height: 4.5rem; padding-top: 1rem; border-top: 1px solid rgba(242,226,207,0.3); color: #E8CFB4; }
+  .answer .go-btn { margin-top: 0.8rem; }
+  .dlg-foot { display: flex; justify-content: flex-end; margin-top: 1rem; }
+  .dlg-foot button { cursor: pointer; background: none; border: 0; text-decoration: underline; padding: 0.3rem; }
+
+  /* ---------- hero ---------- */
+  .slide.hero { display: flex; }
+  .hero .wrap { margin: auto; width: 100%; }
+  .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
+  @media (min-width: 980px) { .hero-grid { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
+  .open-pill { display: inline-flex; align-items: center; gap: 0.65rem; margin-bottom: 1.5rem; padding: 0.4rem 1rem; border: 1.5px solid rgba(224,154,90,0.6); border-radius: 1.4rem; font-size: 0.95rem; font-weight: 600; color: var(--bronze-ink); }
+  .name { font-size: clamp(3.8rem, min(12vw, 20vh), 9rem); line-height: 0.85; color: var(--bronze-ink); }
+  .role { font-size: clamp(1.1rem, 2.1vw, 1.35rem); margin-top: 1.5rem; max-width: 30rem; color: #E8CFB4; }
+  .facts { margin-top: 1rem; color: #C9AE92; font-size: 0.98rem; max-width: 30rem; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2rem; }
+
+  .refinery { background: #160D08; border: 1px solid rgba(224,154,90,0.4); border-radius: 8px; overflow: hidden; }
+  .tabs { display: flex; border-bottom: 1px solid rgba(224,154,90,0.3); }
+  .tab {
+    flex: 1; font-weight: 600; font-size: 0.95rem; color: #BFA48A; background: none; border: 0;
+    padding: 0.85rem 0.5rem; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px;
+  }
+  .tab:hover, .tab[aria-selected="true"] { color: var(--bronze-ink); }
+  .tab[data-stage="0"][aria-selected="true"] { border-bottom-color: #B87333; }
+  .tab[data-stage="1"][aria-selected="true"] { border-bottom-color: #AEB8C2; }
+  .tab[data-stage="2"][aria-selected="true"] { border-bottom-color: #EBCF7E; }
+  .tab small { display: block; font-weight: 400; font-size: 0.78rem; opacity: 0.8; }
+  .stage-body { padding: 1.1rem 1rem; min-height: 15rem; font-family: var(--mono); font-size: 0.78rem; line-height: 1.75; overflow-x: auto; animation: swap 0.35s ease; }
+  @keyframes swap { from { opacity: 0.25; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  .raw-line { white-space: pre; color: #E8CFB4; }
+  .raw-line.dupe { opacity: 0.55; }
+  .bad { color: #FFB27A; text-decoration: underline wavy #FFB27A; text-underline-offset: 3px; }
+  table.grid { border-collapse: collapse; width: 100%; min-width: 31rem; }
+  table.grid th { text-align: left; font-weight: 600; color: #AEB8C2; padding: 0.15rem 0.9rem 0.45rem 0; border-bottom: 1px solid rgba(174,184,194,0.35); }
+  table.grid td { padding: 0.3rem 0.9rem 0.3rem 0; color: #E8E3DC; white-space: nowrap; }
+  table.grid.goldt th { color: #EBCF7E; border-bottom-color: rgba(235,207,126,0.4); }
+  table.grid.goldt td { color: #F7EAC0; }
+  .panel-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: 0.85rem 1rem; border-top: 1px solid rgba(224,154,90,0.3); }
+  .note { font-size: 0.88rem; color: #C9AE92; max-width: 26rem; }
+  .run { font-weight: 600; font-size: 0.92rem; background: var(--bronze-accent); color: #24160F; border: 0; border-radius: 4px; padding: 0.55rem 1.1rem; cursor: pointer; }
+  .run:hover:not(:disabled) { background: #F2B27A; }
+  .run:disabled { opacity: 0.6; cursor: progress; }
+  .caption { font-size: 0.8rem; color: #A38A72; padding: 0 1rem 0.9rem; }
+
+  /* ---------- about ---------- */
+  .about-grid { display: grid; gap: 2.5rem; margin-top: 2.25rem; }
+  @media (min-width: 900px) { .about-grid { grid-template-columns: 1.1fr 1fr; gap: 5rem; } }
+  .about-text p + p { margin-top: 1.1rem; }
+  .about-text { max-width: 38rem; }
+  .marks li { padding: 1rem 0; border-top: 1px solid rgba(242,226,207,0.25); }
+  .marks li:last-child { border-bottom: 1px solid rgba(242,226,207,0.25); }
+  .marks strong { color: var(--bronze-accent); font-weight: 600; }
+
+  /* ---------- skills ---------- */
+  .skills { display: grid; gap: 2.5rem; margin-top: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr)); }
+  .skill-col { border-top: 3px solid var(--silver-ink); padding-top: 1rem; }
+  .skill-col h3 { font-size: 1.9rem; color: var(--silver-accent); }
+  .skill-col ul { margin-top: 1rem; }
+  .skill-col li { padding: 0.35rem 0; font-weight: 500; }
+  .skill-col li::before { content: ""; display: inline-block; width: 0.45rem; height: 0.45rem; background: var(--silver-accent); margin-right: 0.7rem; transform: translateY(-1px); }
+
+  /* ---------- experience ---------- */
+  .roles { margin-top: 2.5rem; border-top: 3px solid var(--silver-ink); }
+  .role-row { display: grid; gap: 1rem; padding: 2rem 0; border-bottom: 3px solid var(--silver-ink); }
+  @media (min-width: 900px) { .role-row { grid-template-columns: 15rem 1fr; gap: 3rem; } }
+  .role-meta .when { font-family: var(--display); font-weight: 800; font-size: 1.5rem; color: var(--silver-accent); line-height: 1.1; }
+  .role-meta .where { margin-top: 0.4rem; font-size: 0.95rem; }
+  .role-body h3 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); }
+  .role-body .org { font-weight: 600; margin-top: 0.35rem; }
+  .role-body .about-org { font-size: 0.95rem; margin-top: 0.15rem; color: #3A4651; max-width: 40rem; }
+  .role-body ul { margin-top: 1rem; max-width: 42rem; }
+  .role-body li { position: relative; padding: 0.3rem 0 0.3rem 1.3rem; }
+  .role-body li::before { content: ""; position: absolute; left: 0; top: 0.95em; width: 0.45rem; height: 0.45rem; background: var(--silver-accent); }
+  .role-body strong { font-weight: 600; }
+
+  /* ---------- results dashboard ---------- */
+  .dash { margin-top: 2.25rem; background: #241A06; color: #F7EAC0; border-radius: 10px; overflow: hidden; }
+  .dash-head { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: 0.9rem 1.25rem; border-bottom: 1px solid rgba(247,234,192,0.2); font-family: var(--mono); font-size: 0.82rem; color: #D9C58A; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); }
+  .kpi { padding: 1.2rem 1.25rem; border-right: 1px solid rgba(247,234,192,0.15); border-bottom: 1px solid rgba(247,234,192,0.15); }
+  .kpi .v { font-family: var(--display); font-weight: 800; font-size: clamp(2.4rem, 4vw, 3.3rem); line-height: 1; color: #F5D56B; white-space: nowrap; }
+  .kpi .l { margin-top: 0.5rem; font-weight: 600; line-height: 1.3; }
+  .kpi .s { margin-top: 0.2rem; font-size: 0.85rem; color: #CDB97F; line-height: 1.35; }
+  .dash-body { display: grid; }
+  @media (min-width: 900px) { .dash-body { grid-template-columns: 1.7fr 1fr; } }
+  .panel { padding: 1.4rem 1.25rem 1.6rem; }
+  .panel + .panel { border-top: 1px solid rgba(247,234,192,0.15); }
+  @media (min-width: 900px) { .panel + .panel { border-top: 0; border-left: 1px solid rgba(247,234,192,0.15); } }
+  .panel h3 { font-size: 1.9rem; color: #F7EAC0; }
+  .panel .hint { margin-top: 0.4rem; font-size: 0.9rem; color: #CDB97F; }
+  .bars { margin-top: 1.2rem; display: grid; gap: 1.1rem; }
+  .bar-item .top { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.95rem; }
+  .bar-item .top span:last-child { font-family: var(--mono); font-size: 0.82rem; color: #CDB97F; white-space: nowrap; }
+  .bar-track { height: 9px; border-radius: 5px; background: rgba(247,234,192,0.1); margin-top: 0.4rem; overflow: hidden; }
+  .bar-before { width: 100%; height: 100%; background: #7A6A3C; }
+  .bar-after { width: 0; height: 100%; background: #F5D56B; transition: width 1.1s cubic-bezier(.2,.7,.2,1); }
+  .play .bar-after { width: var(--w); }
+  .legend { display: flex; gap: 1.2rem; margin-top: 1.2rem; font-size: 0.85rem; color: #CDB97F; }
+  .legend i { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; margin-right: 0.4rem; }
+  .donut-wrap { display: grid; justify-items: center; text-align: center; }
+  .donut { width: 11.5rem; height: 11.5rem; margin-top: 1rem; }
+  .donut-track { fill: none; stroke: rgba(247,234,192,0.12); stroke-width: 12; }
+  .donut-arc { fill: none; stroke: #F5D56B; stroke-width: 12; stroke-linecap: round; stroke-dasharray: 326.7; stroke-dashoffset: 326.7; transform: rotate(-90deg); transform-origin: 60px 60px; transition: stroke-dashoffset 1.3s cubic-bezier(.2,.7,.2,1); }
+  .play .donut-arc { stroke-dashoffset: 3.3; }
+  .donut text { fill: #F7EAC0; font-family: var(--display); font-weight: 800; font-size: 25px; text-anchor: middle; }
+  .donut-cap { margin-top: 0.8rem; font-size: 0.92rem; color: #D9C58A; max-width: 16rem; }
+
+  /* ---------- projects ---------- */
+  .sub-h { font-size: clamp(2rem, 4vw, 2.9rem); margin-top: 3.5rem; }
+  .projects { margin-top: 1.5rem; border-top: 3px solid var(--gold-ink); }
+  .project { display: grid; gap: 1.25rem; padding: 2.25rem 0.5rem; border-bottom: 3px solid var(--gold-ink); transition: background 0.25s; }
+  .project:hover { background: rgba(255,255,255,0.28); }
+  @media (min-width: 900px) { .project { grid-template-columns: 11rem 1fr 11rem; gap: 2.5rem; align-items: start; padding-left: 1rem; padding-right: 1rem; } }
+  .platform { font-family: var(--display); font-weight: 800; font-size: 1.6rem; color: var(--gold-accent); line-height: 1; }
+  .project h3 { font-size: clamp(2rem, 4vw, 2.9rem); }
+  .project .desc { margin-top: 0.8rem; max-width: 40rem; }
+  .io { margin: 1.1rem 0 0; display: grid; gap: 0.35rem; font-size: 0.95rem; max-width: 40rem; }
+  .io div { display: grid; grid-template-columns: 3.2rem 1fr; gap: 0.5rem; }
+  .io dt { font-weight: 600; color: var(--gold-accent); }
+  .io dd { margin: 0; }
+  .stack { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .stack span { font-size: 0.85rem; font-weight: 500; padding: 0.15rem 0.6rem; border: 1.5px solid var(--gold-ink); border-radius: 3px; }
+  .go { justify-self: start; font-weight: 600; text-decoration: none; border-bottom: 2px solid currentColor; padding-bottom: 0.1rem; }
+  @media (min-width: 900px) { .go { justify-self: end; } }
+  .go:hover { color: var(--gold-accent); }
+  .go.nolink { border-bottom: 0; font-weight: 500; color: var(--gold-accent); }
+
+  /* ---------- education ---------- */
+  .cred-grid { display: grid; gap: 3rem; margin-top: 2.5rem; }
+  @media (min-width: 900px) { .cred-grid { grid-template-columns: 1.2fr 1fr; gap: 5rem; } }
+  .cred-grid h3 { font-size: clamp(2rem, 4vw, 2.9rem); }
+  .cert-list { margin-top: 1.25rem; }
+  .cert-list li { padding: 0.9rem 0; border-top: 2px solid rgba(43,32,8,0.4); font-weight: 500; font-size: 1.1rem; }
+  .cert-list li:last-child { border-bottom: 2px solid rgba(43,32,8,0.4); }
+  .cert-list small { display: block; font-weight: 400; font-size: 0.95rem; margin-top: 0.15rem; }
+
+  /* ---------- contact ---------- */
+  .open-note { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 1.25rem; font-weight: 600; color: var(--bronze-accent); }
+  .open-note i, .open-pill i { flex: none; width: 0.65rem; height: 0.65rem; border-radius: 50%; background: #7FD99A; box-shadow: 0 0 0 4px rgba(127,217,154,0.2); }
+  .contact-grid { display: grid; gap: 2.5rem; margin-top: 2rem; align-items: start; }
+  @media (min-width: 960px) { .contact-grid { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
+  .contact-grid .contact-list { margin-top: 0; max-width: none; }
+  .contact-form { display: grid; gap: 1rem; }
+  .field label { display: block; font-size: 0.9rem; color: #C9AE92; margin-bottom: 0.3rem; }
+  .field input, .field textarea {
+    width: 100%; font: inherit; color: var(--bronze-ink); background: rgba(242,226,207,0.06);
+    border: 1.5px solid rgba(242,226,207,0.35); border-radius: 6px; padding: 0.8rem 1rem;
+  }
+  .field textarea { min-height: 9rem; resize: vertical; }
+  .field input:hover, .field textarea:hover { border-color: rgba(242,226,207,0.6); }
+  .field input:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--bronze-accent); outline-offset: 2px; }
+  .contact-form .send { width: 100%; text-align: center; }
+  .form-note { font-size: 0.88rem; color: #C9AE92; }
+  .contact-list { margin-top: 2.25rem; max-width: 40rem; }
+  .contact-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 1.1rem 0; border-top: 1px solid rgba(242,226,207,0.3); flex-wrap: wrap; }
+  .contact-list li:last-child { border-bottom: 1px solid rgba(242,226,207,0.3); }
+  .contact-list .k { color: #C9AE92; min-width: 6rem; }
+  .contact-list a { font-size: 1.1rem; font-weight: 500; }
+  .contact-list a:hover { color: var(--bronze-accent); }
+  button.copy { font-weight: 600; font-size: 0.9rem; background: none; color: var(--bronze-ink); border: 1.5px solid var(--bronze-ink); border-radius: 4px; padding: 0.3rem 0.8rem; cursor: pointer; }
+  button.copy:hover { background: var(--bronze-ink); color: var(--bronze-bg); }
+  .mail-wrap { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
+  footer { margin-top: 3rem; font-size: 0.9rem; color: #A38A72; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide, .progress span, .bar-after, .donut-arc, .dot { transition: none !important; }
+    .stage-body { animation: none; }
+  }
+</style>
 </head>
-    
-<body>
+<body data-layer="bronze">
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"><span id="bar"></span></div>
 
-    <nav>
-        <div class="nav-container">
-            <div class="logo">AG</div>
-
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
-                <a href="#certifications">Certifications</a>
-                <a href="#resume">Resume</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </div>
+<header class="nav">
+  <a class="brand" href="#top" aria-label="Aashima Gupta, back to start">AG</a>
+  <div class="nav-right">
+    <nav aria-label="Primary">
+      <ul id="navlinks">
+        <li><a href="#top">Start</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </nav>
-    
-    <section class="hero">
-        <h1>Aashima Gupta</h1>
-        <h2>Data Engineer & Analytics Professional</h2>
+    <span class="layer-pill" aria-live="polite"><i></i><span id="layerName">Bronze layer</span></span>
+  </div>
+</header>
 
-        <p>
-        Passionate about building scalable data solutions and
-        transforming data into actionable insights using
-        Microsoft Fabric, Azure, Databricks, SQL, Python and Power BI.
-        </p>
+<main class="stage" id="main" tabindex="-1">
 
-        <a href="#projects">View Projects</a>
-    </section>
+  <!-- 1 START (bronze) -->
+  <section class="slide layer bronze hero" id="top" data-layer="bronze" data-label="Bronze layer" tabindex="-1" aria-label="Start">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="open-pill"><i aria-hidden="true"></i>Open to new Data Analyst and Data Engineer roles in Melbourne</p>
+        <h1 class="name">Aashima<br>Gupta</h1>
+        <p class="role">Data engineer in Melbourne. I build pipelines that turn raw feeds into tables people can trust, then put them in front of decision makers as dashboards.</p>
+        <p class="facts">Databricks Certified Data Engineer Associate with 4+ years on Databricks and Azure, plus hands-on Microsoft Fabric. Power BI, SQL, BigQuery and star schema modelling.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#projects">See the projects</a>
+          <a class="btn ghost" href="Aashima_Gupta_Resume.pdf">Download resume</a>
+        </div>
+      </div>
 
-    <section id="about">
-        <h2>About Me</h2>
+      <div class="refinery" aria-label="Interactive example of a medallion pipeline">
+        <div class="tabs" role="tablist" aria-label="Pipeline stage">
+          <button class="tab" role="tab" data-stage="0" aria-selected="true">Bronze<small>raw</small></button>
+          <button class="tab" role="tab" data-stage="1" aria-selected="false">Silver<small>cleaned</small></button>
+          <button class="tab" role="tab" data-stage="2" aria-selected="false">Gold<small>business-ready</small></button>
+        </div>
+        <div class="stage-body" id="stageBody" role="tabpanel" tabindex="0"></div>
+        <div class="panel-foot">
+          <p class="note" id="stageNote"></p>
+          <button class="run" id="run" type="button">Run the pipeline</button>
+        </div>
+        <p class="caption">Illustrative sample rows modelled on an earthquake feed. Not real data.</p>
+      </div>
+    </div>
+  </section>
 
-        <p>
-            I'm a Melbourne-based Data Engineer and Analytics Professional
-            with experience in designing data pipelines, transforming data,
-            building semantic models and delivering business insights
-            through interactive dashboards.
-        </p>
-
-        <p>
-            My technical interests include Microsoft Fabric, Azure,
-            Databricks, SQL, Python, Data Warehousing and Power BI.
-            I enjoy turning complex business problems into scalable
-            data solutions that support decision-making.
-        </p>
-
-        <p>
-            I am continuously upskilling through industry certifications,
-            hands-on projects and community learning initiatives.
-        </p>
-    </section>
-
-    <section id="highlights">
-        <h2>Highlights</h2>
-
-        <ul>
-            <li>Built an end-to-end Microsoft Fabric analytics solution processing 32,718 sales transactions.</li>
-            <li>Databricks Certified Data Engineer Associate.</li>
-            <li>Experience with Microsoft Fabric, Azure, Databricks, SQL, Python and Power BI.</li>
-            <li>Delivered interactive dashboards and business intelligence solutions.</li>
-            <li>Passionate about modern data platforms and analytics engineering.</li>
+  <!-- 2 ABOUT (bronze) -->
+  <section class="slide layer bronze" id="about" data-layer="bronze" data-label="Bronze layer" tabindex="-1" aria-label="About">
+    <div class="wrap">
+      <h2 class="h2">Every pipeline starts with raw material</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm a data engineer based in Melbourne. I design data pipelines, transform what comes in, build dimensional models and deliver the dashboards that turn it into decisions.</p>
+          <p>I started in banking and insurance software at TCS, then moved into data engineering at HCLTech, Fulcrum Digital and Cognizant, building medallion pipelines on Databricks and Azure. After a career break from 2023, I came back through the Databricks certification, end-to-end projects on Databricks and Microsoft Fabric, and an internship at the Data &amp; AI Institute, working in Power BI, SQL and BigQuery.</p>
+          <p>I like taking a tangled business question and building a platform that keeps answering it, and I keep learning through certifications and hands-on projects.</p>
+        </div>
+        <ul class="marks">
+          <li><strong>4 workstreams</strong> in 12 weeks at TDAI: social media, student surveys, web traffic, and automation and AI workflows.</li>
+          <li><strong>Billions</strong> of CDC events a month handled by an ingestion architecture I designed.</li>
+          <li><strong>15M+</strong> customer profiles and 300M+ transactions modelled with SCD Type 1 and 2.</li>
+          <li><strong>Databricks</strong> Certified Data Engineer Associate, 2026.</li>
         </ul>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section id="skills">
-        <h2>Skills</h2>
+  <!-- 3 EXPERIENCE (silver) -->
+  <section class="slide layer silver" id="experience" data-layer="silver" data-label="Silver layer" tabindex="-1" aria-label="Experience">
+    <div class="wrap">
+      <h2 class="h2">Lineage: where the work came from</h2>
+      <p class="lede">Banking, insurance, retail and data education, with a career break between 2023 and 2026. Newest first.</p>
+      <div class="roles">
 
-        <h3>Data Engineering</h3>
-        <p>
-            Microsoft Fabric • Azure Data Factory • Databricks •
-            Delta Lake • PySpark • ETL Development • Data Warehousing
-        </p>
+        <article class="role-row">
+          <div class="role-meta"><div class="when">Jul 2026 to now</div><div class="where">Melbourne</div></div>
+          <div class="role-body">
+            <h3>Operations Data Analyst (Internship)</h3>
+            <p class="org">The Data &amp; AI Institute (TDAI)</p>
+            <p class="about-org">An Australian data and AI training institute pairing an analytics program with internships on real business data.</p>
+            <ul>
+              <li>Twelve weeks on real business data across four workstreams: social media marketing, student survey analytics, web traffic analytics, and automation and AI workflows.</li>
+              <li><strong>Social media:</strong> reported on channel and content performance across Meta, LinkedIn and Instagram. Analysed 238 LinkedIn posts in Excel and found that student success stories drove <strong>10% higher engagement</strong>.</li>
+              <li><strong>Surveys:</strong> built a Power BI dashboard with DAX on Google Forms and Sheets data, covering 167 responses, to track course progress, completion and learner outcomes without manual summaries.</li>
+              <li><strong>Web traffic:</strong> queried GA4 event data in GCP BigQuery with SQL and built a live, self-serve dashboard on traffic, conversion and revenue.</li>
+              <li><strong>Automation and AI:</strong> built a Python chat app that turns plain-English questions into BigQuery queries, so non-technical staff get answers without waiting for an analyst.</li>
+            </ul>
+          </div>
+        </article>
 
-        <h3>Analytics & BI</h3>
-        <p>
-            Power BI • DAX • Data Modelling • Dashboard Design •
-            KPI Development • Business Intelligence
-        </p>
+        <article class="role-row">
+          <div class="role-meta"><div class="when">Aug 2023 to Jun 2026</div><div class="where">Career break</div></div>
+          <div class="role-body">
+            <h3>Career break</h3>
+            <p class="about-org">Time away from work after Cognizant, then a deliberate return to the field.</p>
+            <ul>
+              <li>Earned the Databricks Certified Data Engineer Associate credential in 2026.</li>
+              <li>Built end-to-end projects on Databricks and Microsoft Fabric, from raw data to tested models and dashboards.</li>
+              <li>Joined the Data &amp; AI Institute program and internship that led into my current role.</li>
+            </ul>
+          </div>
+        </article>
 
-        <h3>Programming & Databases</h3>
-        <p>
-            SQL • Python • T-SQL • Git • GitHub
-        </p>
+        <article class="role-row">
+          <div class="role-meta"><div class="when">Feb 2023 to Aug 2023</div><div class="where">Melbourne</div></div>
+          <div class="role-body">
+            <h3>Data Engineer</h3>
+            <p class="org">Cognizant</p>
+            <p class="about-org">A global services firm modernising banking, insurance and retail clients through cloud, data and AI.</p>
+            <ul>
+              <li>Built and ran enterprise CDC pipelines with Fivetran HVR, Databricks and Delta Live Tables, feeding an Azure Lakehouse.</li>
+              <li>Designed an ingestion architecture handling <strong>billions of CDC events a month</strong> with consistent delivery.</li>
+              <li>Automated Bronze, Silver and Gold pipelines with DLT expectations, schema enforcement, testing and alerting.</li>
+              <li>Set up a data quality framework of validation rules, reconciliation and metadata checks, sustaining <strong>99%+ platform reliability</strong> with PII masking and lineage for audit.</li>
+              <li>Cut deployment time by <strong>40%</strong> with GitHub branching, automated testing and Azure DevOps CI/CD.</li>
+            </ul>
+          </div>
+        </article>
 
-        <h3>Cloud Platforms</h3>
-        <p>
-            Microsoft Azure • Microsoft Fabric
-        </p>
-    </section>
+        <article class="role-row">
+          <div class="role-meta"><div class="when">Dec 2021 to Aug 2022</div><div class="where">Pune</div></div>
+          <div class="role-body">
+            <h3>Data Engineer</h3>
+            <p class="org">Fulcrum Digital</p>
+            <p class="about-org">A digital transformation firm delivering cloud, data platform, automation and AI services to global enterprises.</p>
+            <ul>
+              <li>Built cloud-native data solutions on Azure Data Factory, Databricks and ADLS for enterprise platform modernisation.</li>
+              <li>Developed ETL and ELT ingestion from flat files, APIs, relational databases and third-party systems.</li>
+              <li>Created a reusable Bronze ingestion framework with schema evolution, lineage tracking and automated reconciliation, cutting source onboarding <strong>from 5 days to 2</strong>.</li>
+              <li>Delivered Silver transformations and Gold dimensional models with SCD Type 1 and 2, giving BI teams analytics-ready data for <strong>20+ reports</strong>.</li>
+              <li>Applied data masking and quality rules, secured credentials in Azure Key Vault and deployed through Azure DevOps CI/CD.</li>
+            </ul>
+          </div>
+        </article>
 
-    <section id="projects">
-        <h2>Projects</h2>
+        <article class="role-row">
+          <div class="role-meta"><div class="when">Jul 2019 to Nov 2021</div><div class="where">Pune</div></div>
+          <div class="role-body">
+            <h3>Data Engineer</h3>
+            <p class="org">HCLTech</p>
+            <p class="about-org">A global technology company delivering cloud, AI and data transformation across banking, insurance and healthcare.</p>
+            <ul>
+              <li>Designed and ran enterprise pipelines on Databricks, Spark and Azure Data Lake Storage for customer analytics and reporting.</li>
+              <li>Processed <strong>200+ GB of daily ingestion</strong> through Delta Lake medallion pipelines with schema validation, reconciliation and PII masking.</li>
+              <li>Modelled fact and dimension tables with SCD Type 1 and 2 for <strong>15M+ customer profiles and 300M+ transactions</strong>.</li>
+              <li>Improved query performance by <strong>40 to 60%</strong> through Spark tuning, partitioning, caching and Delta table optimisation.</li>
+            </ul>
+          </div>
+        </article>
 
-        <div class="card">
-            <h3>Microsoft Fabric Sales Analytics</h3>
-            <p>End-to-end analytics solution using Fabric, PySpark, Dataflow Gen2, Warehouse and Power BI.</p>
-            <a href="https://github.com/Aashima-91/fabric-sales-analytics" target="_blank">
-                View Project
-            </a>
+        <article class="role-row">
+          <div class="role-meta"><div class="when">Jun 2016 to Jul 2019</div><div class="where">Pune</div></div>
+          <div class="role-body">
+            <h3>System Engineer</h3>
+            <p class="org">Tata Consultancy Services (TCS)</p>
+            <p class="about-org">A global IT services leader whose banking and financial services unit serves some of the world's largest institutions.</p>
+            <ul>
+              <li>Developed and maintained Android and Java digital banking applications for banking clients in Agile Scrum delivery teams.</li>
+              <li>Built secure REST API integrations with token-based authentication between mobile apps and banking systems.</li>
+              <li>Delivered an insurance proof of concept with a premium calculation engine and risk assessment rules in <strong>2 weeks</strong>.</li>
+              <li>Wrote JUnit and Mockito tests and reusable integration components, reducing API integration effort by <strong>30%</strong>.</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 SKILLS (silver) -->
+  <section class="slide layer silver" id="skills" data-layer="silver" data-label="Silver layer" tabindex="-1" aria-label="Skills">
+    <div class="wrap">
+      <h2 class="h2">Cleaned, conformed and ready to use</h2>
+      <p class="lede">The tools I reach for, grouped by the job they do.</p>
+      <div class="skills">
+        <div class="skill-col">
+          <h3>Data engineering</h3>
+          <ul><li>Databricks</li><li>Apache Spark and PySpark</li><li>Spark SQL</li><li>Delta Lake</li><li>Delta Live Tables</li><li>Fivetran HVR</li><li>Microsoft Fabric (Lakehouse, Warehouse)</li></ul>
+        </div>
+        <div class="skill-col">
+          <h3>Cloud and orchestration</h3>
+          <ul><li>Azure Data Factory</li><li>Fabric Data Factory and Dataflow Gen2</li><li>Azure Data Lake Storage</li><li>Azure Key Vault</li><li>GCP BigQuery</li><li>Apache Airflow</li><li>Databricks Workflows</li></ul>
+        </div>
+        <div class="skill-col">
+          <h3>Analytics and BI</h3>
+          <ul><li>Power BI and DAX</li><li>Excel (Power Query, PivotTables)</li><li>Google Sheets</li><li>Google Analytics 4</li><li>EDA</li><li>Data visualisation</li><li>Automation and AI workflows</li></ul>
+        </div>
+        <div class="skill-col">
+          <h3>Modelling and governance</h3>
+          <ul><li>Star schema and dimensional modelling</li><li>Medallion architecture</li><li>SCD Type 1 and 2</li><li>Data quality frameworks</li><li>PII masking</li><li>Data lineage</li></ul>
+        </div>
+        <div class="skill-col">
+          <h3>Languages and DevOps</h3>
+          <ul><li>SQL</li><li>Python</li><li>Java</li><li>Git and GitHub</li><li>Azure DevOps and CI/CD</li><li>Agile Scrum</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 PROJECTS (gold) -->
+  <section class="slide layer gold" id="projects" data-layer="gold" data-label="Gold layer" tabindex="-1" aria-label="Projects">
+    <div class="wrap">
+      <h2 class="h2">Gold: results you can measure</h2>
+      <p class="lede">Figures from my roles and projects, then the seven projects behind them.</p>
+
+      <div class="dash" id="dash">
+        <div class="dash-head"><span>results_dashboard</span><span>Last refreshed <time id="refreshed"></time></span></div>
+
+        <div class="kpis">
+          <div class="kpi"><div class="v">200+</div><div class="l">GB ingested every day</div><div class="s">Delta Lake medallion pipelines</div></div>
+          <div class="kpi"><div class="v">32,718</div><div class="l">sales transactions</div><div class="s">End-to-end Microsoft Fabric solution</div></div>
+          <div class="kpi"><div class="v">40%</div><div class="l">faster deployments</div><div class="s">GitHub and Azure DevOps CI/CD</div></div>
+          <div class="kpi"><div class="v">5 to 2</div><div class="l">days to onboard a source</div><div class="s">Reusable Bronze ingestion framework</div></div>
+          <div class="kpi"><div class="v">~55</div><div class="l">automated quality checks</div><div class="s">Insurance Claims Lakehouse</div></div>
+          <div class="kpi"><div class="v">60%</div><div class="l">less reporting time</div><div class="s">Survey dashboard at TDAI</div></div>
         </div>
 
-        <div class="card">
-            <h3>Microsoft Fabric Worldwide Earthquake Analytics</h3>
-            <p>A live-data pipeline from the USGS API through a medallion Lakehouse to an interactive Power BI map, 
-                refreshed daily with Data Factory.</p>
-            <a href="https://github.com/Aashima-91/fabric-earthquake-analytics" target="_blank">
-                View Project
-            </a>
-        </div>
-        
-        <div class="card">
-            <h3>Insurance Claims Lakehouse — Medallion Pipeline on Databricks</h3>
-            <p>An end-to-end, incremental data pipeline that turns raw insurance claims, policy, payment, weather and 
-                fraud feeds into a tested star schema, orchestrated as code on Databricks.</p>
-            <a href="https://github.com/Aashima-91/insurance_claims" target="_blank">
-                View Project
-            </a>
-        </div>
+        <div class="dash-body">
+          <div class="panel">
+            <h3>Before and after</h3>
+            <p class="hint">Bars show an index, where the starting point is 100.</p>
+            <div class="bars">
+              <div class="bar-item">
+                <div class="top"><span>Source onboarding time</span><span>100 to 40</span></div>
+                <div class="bar-track"><div class="bar-before"></div></div>
+                <div class="bar-track"><div class="bar-after" style="--w:40%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="top"><span>Deployment time</span><span>100 to 60</span></div>
+                <div class="bar-track"><div class="bar-before"></div></div>
+                <div class="bar-track"><div class="bar-after" style="--w:60%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="top"><span>Survey reporting time</span><span>100 to 40</span></div>
+                <div class="bar-track"><div class="bar-before"></div></div>
+                <div class="bar-track"><div class="bar-after" style="--w:40%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="top"><span>API integration effort</span><span>100 to 70</span></div>
+                <div class="bar-track"><div class="bar-before"></div></div>
+                <div class="bar-track"><div class="bar-after" style="--w:70%"></div></div>
+              </div>
+            </div>
+            <div class="legend"><span><i style="background:#7A6A3C"></i>Before</span><span><i style="background:#F5D56B"></i>After</span></div>
+          </div>
 
-        <div class="card">
+          <div class="panel donut-wrap">
+            <h3>Platform reliability</h3>
+            <svg class="donut" viewBox="0 0 120 120" role="img" aria-label="99 percent or more platform reliability">
+              <circle class="donut-track" cx="60" cy="60" r="52"/>
+              <circle class="donut-arc" cx="60" cy="60" r="52"/>
+              <text x="60" y="69">99%+</text>
+            </svg>
+            <p class="donut-cap">Sustained at Cognizant with validation rules, reconciliation and metadata checks.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="sub-h">The projects</h3>
+      <div class="projects">
+        <article class="project">
+          <div class="platform">Microsoft Fabric</div>
+          <div>
+            <h3>Fabric Sales Analytics</h3>
+            <p class="desc">An end-to-end analytics solution that takes sales data from ingestion through to a Power BI report, processing 32,718 transactions.</p>
+            <div class="stack"><span>Fabric</span><span>PySpark</span><span>Dataflow Gen2</span><span>Warehouse</span><span>Power BI</span></div>
+          </div>
+          <a class="go" href="https://github.com/Aashima-91/fabric-sales-analytics" aria-label="Fabric Sales Analytics on GitHub">View on GitHub</a>
+        </article>
+
+        <article class="project">
+          <div class="platform">Microsoft Fabric</div>
+          <div>
+            <h3>Worldwide Earthquake Analytics</h3>
+            <p class="desc">A live-data pipeline refreshed daily with Data Factory, built on a medallion Lakehouse.</p>
+            <dl class="io">
+              <div><dt>In</dt><dd>The USGS earthquake API</dd></div>
+              <div><dt>Out</dt><dd>An interactive Power BI map</dd></div>
+            </dl>
+            <div class="stack"><span>Medallion Architecture</span><span>Lakehouse</span><span>Data Factory</span><span>Power BI</span></div>
+          </div>
+          <a class="go" href="https://github.com/Aashima-91/fabric-earthquake-analytics" aria-label="Worldwide Earthquake Analytics on GitHub">View on GitHub</a>
+        </article>
+
+        <article class="project">
+          <div class="platform">Databricks</div>
+          <div>
+            <h3>Insurance Claims Lakehouse</h3>
+            <p class="desc">An incremental medallion pipeline run as a 32-task job and deployed through Databricks Asset Bundles.</p>
+            <dl class="io">
+              <div><dt>In</dt><dd>Claims, policy, payment, weather and fraud data from 8 JSON and CSV sources</dd></div>
+              <div><dt>Out</dt><dd>A star schema of 4 dimensions and 4 fact tables, with hashed PII and about 55 automated quality checks</dd></div>
+            </dl>
+            <div class="stack"><span>Medallion Architecture</span><span>Auto Loader</span><span>PySpark</span><span>Delta Lake</span><span>Unity Catalog</span></div>
+          </div>
+          <a class="go" href="https://github.com/Aashima-91/insurance_claims" aria-label="Insurance Claims Lakehouse on GitHub">View on GitHub</a>
+        </article>
+
+        <article class="project">
+          <div class="platform">Databricks</div>
+          <div>
             <h3>BikeMart Data Warehouse</h3>
-            <p>An end-to-end Databricks lakehouse project: raw bike-retailer data engineered through a 
-                Bronze -> Silver -> Gold medallion architecture into a business-ready snowflake schema, deployed and 
-                tested with a full CI/CD pipeline (GitHub Actions + Databricks Asset Bundles).</p>
-            <a href="https://github.com/Aashima-91/bikemart-databricks-dwh" target="_blank">
-                View Project
-            </a>
+            <p class="desc">A lakehouse for a bike retailer, deployed and tested with a full CI/CD pipeline. Referential integrity and surrogate key checks gate every run, and I fixed a silent bug that was zeroing valid sales rows.</p>
+            <dl class="io">
+              <div><dt>In</dt><dd>CRM and ERP data across 6 source files</dd></div>
+              <div><dt>Out</dt><dd>A business-ready snowflake schema</dd></div>
+            </dl>
+            <div class="stack"><span>Medallion Architecture</span><span>Spark SQL</span><span>PySpark</span><span>GitHub Actions</span><span>Databricks Asset Bundles</span></div>
+          </div>
+          <a class="go" href="https://github.com/Aashima-91/bikemart-databricks-dwh" aria-label="BikeMart Data Warehouse on GitHub">View on GitHub</a>
+        </article>
+
+        <article class="project">
+          <div class="platform">Google Cloud & Power BI</div>
+          <div>
+            <h3>GA4 Website Analytics</h3>
+            <p class="desc">Built at TDAI to remove the SQL bottleneck for non-technical staff, who can now check website performance themselves without waiting for an analyst. It tracked $300K+ in website payments by product and showed that over half of visitors left the payment page without paying.</p>
+            <dl class="io">
+              <div><dt>In</dt><dd>Daily GA4 event tables in GCP BigQuery</dd></div>
+              <div><dt>Out</dt><dd>A live, self-serve Power BI dashboard on traffic, acquisition and channel, engagement, top pages and sales</dd></div>
+              <div><dt>How</dt><dd>SQL with UNNEST on nested event parameters and user-level joins, a star schema, native connectors, filters and clear visuals, and notes on connection and refresh limits so users know how current the data is</dd></div>
+            </dl>
+            <div class="stack"><span>BigQuery</span><span>SQL</span><span>Power BI</span></div>
+          </div>
+          <span class="go nolink">Internship work</span>
+        </article>
+
+        <article class="project">
+          <div class="platform">Power BI</div>
+          <div>
+            <h3>Survey Analytics Dashboard</h3>
+            <p class="desc">Survey feedback was being summarised by hand, which made trends hard to track. The dashboard gives the team an interactive view of every response and cut reporting time by 60%.</p>
+            <dl class="io">
+              <div><dt>In</dt><dd>Google Forms responses cleaned in Google Sheets</dd></div>
+              <div><dt>Out</dt><dd>A star schema and a Power BI dashboard with DAX measures</dd></div>
+            </dl>
+            <div class="stack"><span>Power BI</span><span>DAX</span><span>Google Sheets</span></div>
+          </div>
+          <span class="go nolink">Internship work</span>
+        </article>
+
+        <article class="project">
+          <div class="platform">Python</div>
+          <div>
+            <h3>BigQuery Chat App</h3>
+            <p class="desc">A Python web app that turns plain-English questions into BigQuery queries and answers in plain English, so staff rely less on analysts.</p>
+            <dl class="io">
+              <div><dt>In</dt><dd>Plain-English questions about website traffic</dd></div>
+              <div><dt>Out</dt><dd>Plain-English answers with the SQL shown, so users can check the result</dd></div>
+              <div><dt>How</dt><dd>LLM interpretation with approved query templates, SELECT-only validation, dry-run checks and a scan cap to control cost. Questions it can't support are refused or clarified rather than guessed.</dd></div>
+            </dl>
+            <div class="stack"><span>Python</span><span>BigQuery</span><span>SQL</span><span>LLM</span></div>
+          </div>
+          <span class="go nolink">Internship work</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 EDUCATION (gold) -->
+  <section class="slide layer gold" id="education" data-layer="gold" data-label="Gold layer" tabindex="-1" aria-label="Education">
+    <div class="wrap">
+      <h2 class="h2">Credentials, verified</h2>
+      <div class="cred-grid">
+        <div>
+          <h3>Education</h3>
+          <ul class="cert-list">
+            <li>The Data &amp; AI Institute, Melbourne<small>12-week Data &amp; AI Program with industry internships, from July 2026 (in progress)</small></li>
+            <li>Guru Nanak Dev University, Amritsar<small>Master of Computer Applications, 8.1/10 CGPA, 2016</small></li>
+          </ul>
         </div>
+        <div>
+          <h3>More certifications</h3>
+          <ul class="cert-list">
+            <li>TDAI Full-Stack Data Professional<small>Credential ID 6ad75b5f140d5044520e07d6, 2026</small></li>
+            <li>Databricks Certified Data Engineer Associate<small>Credential ID 178312810, 2026</small></li>
+            <li>Academy Accreditation: Generative AI Fundamentals</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    </section>
+  <!-- 7 CONTACT (bronze) -->
+  <section class="slide layer bronze" id="contact" data-layer="bronze" data-label="Get in touch" tabindex="-1" aria-label="Contact">
+    <div class="wrap">
+      <h2 class="h2">Let's talk about your data</h2>
+      <p class="open-note"><i aria-hidden="true"></i>Open to new roles</p>
+      <p class="lede">I'm looking for Data Analyst and Data Engineer roles in Melbourne. If you have a pipeline to build or a dashboard nobody trusts, send me a note.</p>
+      <div class="contact-grid">
+      <div>
+      <ul class="contact-list">
+        <li>
+          <span class="k">Email</span>
+          <span class="mail-wrap">
+            <a href="mailto:aashima91.gupta@gmail.com">aashima91.gupta@gmail.com</a>
+            <button class="copy" id="copyMail" type="button">Copy</button>
+          </span>
+        </li>
+        <li><span class="k">LinkedIn</span><a href="https://www.linkedin.com/in/aashima-gupta-860190117/" rel="noopener">linkedin.com/in/aashima-gupta-860190117</a></li>
+        <li><span class="k">GitHub</span><a href="https://github.com/Aashima-91" rel="noopener">github.com/Aashima-91</a></li>
+        <li><span class="k">Data science portfolio</span><a href="https://www.datascienceportfol.io/aashima91gupta" rel="noopener">datascienceportfol.io/aashima91gupta</a></li>
+        <li><span class="k">Resume</span><a href="Aashima_Gupta_Resume.pdf">Download the PDF</a></li>
+      </ul>
+      </div>
 
-    <section id="certifications">
-        <h2>Certifications</h2>
+      <form class="contact-form" id="contactForm" aria-label="Send me an email">
+        <div class="field">
+          <label for="fName">Your name</label>
+          <input id="fName" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="fEmail">Your email</label>
+          <input id="fEmail" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="fMsg">Your message</label>
+          <textarea id="fMsg" rows="5" required></textarea>
+        </div>
+        <button class="btn primary send" type="submit">Send via email</button>
+        <p class="form-note" id="formNote" aria-live="polite">This opens your email app with the message ready to send.</p>
+      </form>
+      </div>
+      <footer>&copy; <span id="yr">2026</span> Aashima Gupta. Based in Melbourne, Australia.</footer>
+    </div>
+  </section>
+</main>
 
-        <ul>
-            <li>Databricks Certified Data Engineer Associate</li>
-            <li>TDAI FULL-STACK DATA PROFESSIONAL</li>
-            <li>Academy Accreditation - Generative AI Fundamentals</li>
-        </ul>
-    </section>
+<button class="ask" id="askBtn" type="button" aria-label="Quick answers">Quick answers</button>
 
-    <section id="resume">
-        <h2>Resume</h2>
+<dialog id="askDlg" aria-labelledby="askTitle">
+  <h2 id="askTitle">Quick answers</h2>
+  <div class="q-list" id="qList"></div>
+  <div class="answer" id="answer" aria-live="polite">Pick a question.</div>
+  <div class="dlg-foot"><button type="button" id="askClose">Close</button></div>
+</dialog>
 
-        <p>
-            Download my latest resume below.
-        </p>
+<nav class="bar" aria-label="Pipeline stops">
+  <button class="arrow prev" id="prev" type="button" aria-label="Previous stop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+  </button>
+  <ol class="track" id="track">
+    <li><button class="stop" type="button" data-i="0"><span class="dot"></span><span class="lbl">Start</span><span class="sub">Source</span></button></li>
+    <li><button class="stop" type="button" data-i="1"><span class="dot"></span><span class="lbl">About</span><span class="sub">Bronze</span></button></li>
+    <li><button class="stop" type="button" data-i="2"><span class="dot"></span><span class="lbl">Experience</span><span class="sub">Lineage</span></button></li>
+    <li><button class="stop" type="button" data-i="3"><span class="dot"></span><span class="lbl">Skills</span><span class="sub">Silver</span></button></li>
+    <li><button class="stop" type="button" data-i="4"><span class="dot"></span><span class="lbl">Projects</span><span class="sub">Gold</span></button></li>
+    <li><button class="stop" type="button" data-i="5"><span class="dot"></span><span class="lbl">Education</span><span class="sub">Verify</span></button></li>
+    <li><button class="stop" type="button" data-i="6"><span class="dot"></span><span class="lbl">Contact</span><span class="sub">Serve</span></button></li>
+  </ol>
+  <button class="arrow next" id="next" type="button" aria-label="Next stop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </button>
+</nav>
 
-        <a href="Aashima_Gupta_Resume.pdf" target="_blank">
-            Download Resume
-        </a>
-    </section>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    <section id="contact">
-        <h2>Contact</h2>
+  /* ================= pipeline navigation ================= */
+  var order = ['top', 'about', 'experience', 'skills', 'projects', 'education', 'contact'];
+  var stage = document.getElementById('main');
+  var slides = order.map(function (id) { return document.getElementById(id); });
+  var stops = Array.prototype.slice.call(document.querySelectorAll('.stop'));
+  var stopItems = stops.map(function (s) { return s.parentNode; });
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('#navlinks a'));
+  var prevBtn = document.getElementById('prev');
+  var nextBtn = document.getElementById('next');
+  var pillText = document.getElementById('layerName');
+  var progress = document.getElementById('bar');
+  var dash = document.getElementById('dash');
+  var cur = -1;
 
-        <p>
-            Feel free to connect with me.
-        </p>
+  function go(i, opts) {
+    opts = opts || {};
+    i = Math.max(0, Math.min(order.length - 1, i));
+    if (i === cur) return;
+    cur = i;
+    slides.forEach(function (s, n) {
+      var state = n < i ? 'before' : (n > i ? 'after' : 'active');
+      s.setAttribute('data-state', state);
+      if (n === i) { s.removeAttribute('inert'); s.setAttribute('aria-hidden', 'false'); }
+      else { s.setAttribute('inert', ''); s.setAttribute('aria-hidden', 'true'); }
+    });
+    stops.forEach(function (b, n) {
+      if (n === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+      stopItems[n].classList.toggle('done', n <= i);
+    });
+    navLinks.forEach(function (a, n) {
+      if (n === i) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === order.length - 1;
+    document.body.setAttribute('data-layer', slides[i].getAttribute('data-layer'));
+    pillText.textContent = slides[i].getAttribute('data-label');
+    progress.style.width = ((i + 1) / order.length * 100) + '%';
+    slides[i].scrollTop = 0;
+    if (order[i] === 'projects') { dash.classList.remove('play'); void dash.offsetWidth; dash.classList.add('play'); }
+    else { dash.classList.remove('play'); }
+    if (!opts.silent) {
+      try { if (history.pushState) history.pushState(null, '', '#' + order[i]); } catch (err) { /* sandboxed preview: skip the URL update */ }
+      slides[i].focus({ preventScroll: true });
+    }
+  }
 
-        <p>
-            LinkedIn:
-            <a href="linkedin.com/in/aashima-gupta-860190117/">
-                View Profile
-            </a>
-        </p>
+  function fromHash() {
+    var id = location.hash.replace('#', '');
+    var i = order.indexOf(id);
+    return i > -1 ? i : -1;
+  }
 
-        <p>
-            GitHub:
-            <a href="https://github.com/Aashima-91">
-                github.com/Aashima-91
-            </a>
-        </p>
+  prevBtn.addEventListener('click', function () { go(cur - 1); });
+  nextBtn.addEventListener('click', function () { go(cur + 1); });
+  stops.forEach(function (b) { b.addEventListener('click', function () { go(parseInt(b.getAttribute('data-i'), 10)); }); });
 
-        <p>
-            Email:
-            <a href="mailto:aashima91.gupta@gmail.com">
-                aashima91.gupta@gmail.com
-            </a>
-        </p>
-    </section>
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var i = order.indexOf(a.getAttribute('href').slice(1));
+    if (i > -1) { e.preventDefault(); go(i); }
+  });
 
+  window.addEventListener('popstate', function () { var i = fromHash(); go(i > -1 ? i : 0, { silent: true }); });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if (e.target.closest && e.target.closest('dialog, .tabs, input, textarea, select')) return;
+    if (e.key === 'ArrowRight') { go(cur + 1); }
+    else if (e.key === 'ArrowLeft') { go(cur - 1); }
+  });
+
+  var tx = 0, ty = 0, skipSwipe = false;
+  stage.addEventListener('touchstart', function (e) { skipSwipe = !!e.target.closest('input, textarea'); tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (skipSwipe) return;
+    var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) > 70 && Math.abs(dy) < 50) go(cur + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  var start = fromHash();
+  go(start > -1 ? start : 0, { silent: true });
+  requestAnimationFrame(function () { requestAnimationFrame(function () { stage.classList.add('ready'); }); });
+
+  /* ================= hero: pipeline panel ================= */
+  var body = document.getElementById('stageBody');
+  var note = document.getElementById('stageNote');
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var runBtn = document.getElementById('run');
+  var timer = null;
+
+  var views = [
+    {
+      note: 'Straight from the API: duplicates, nulls, stray spaces and mixed date formats.',
+      html: function () {
+        return [
+          '<div class="raw-line">{"id":"us7000abc1","mag":"4.7<span class="bad"> </span>","place":"12 km NE of Hualien, Taiwan","time":"2026-10-24T03:15:00Z"}</div>',
+          '<div class="raw-line dupe">{"id":"us7000abc1","mag":"4.7<span class="bad"> </span>","place":"12 km NE of Hualien, Taiwan","time":"2026-10-24T03:15:00Z"}</div>',
+          '<div class="raw-line">{"id":"us7000abd2","mag":<span class="bad">null</span>,"place":"Off the coast of Maule, Chile","time":"2026-10-24T06:40:00Z"}</div>',
+          '<div class="raw-line">{"id":"us7000abe3","mag":"5.2","place":"<span class="bad">  </span>Kermadec Islands, New Zealand","time":"<span class="bad">24/10/2026 14:02</span>"}</div>',
+          '<div class="raw-line">{"id":"us7000abf4","mag":"4.9","place":"Hualien County, Taiwan<span class="bad"> </span>","time":"2026-10-25T01:20:00Z"}</div>',
+          '<div class="raw-line">{"id":"us7000abg5","mag":"6.1","place":"South of the Fiji Islands","time":"2026-10-25T09:55:00Z"}</div>'
+        ].join('');
+      }
+    },
+    {
+      note: 'Typed, trimmed and deduplicated. One duplicate removed, one row with no magnitude quarantined.',
+      html: function () {
+        return '<table class="grid"><thead><tr><th>id</th><th>magnitude</th><th>place</th><th>event_time (UTC)</th><th>region</th></tr></thead><tbody>' +
+          '<tr><td>us7000abc1</td><td>4.7</td><td>12 km NE of Hualien, Taiwan</td><td>2026-10-24 03:15</td><td>Taiwan</td></tr>' +
+          '<tr><td>us7000abe3</td><td>5.2</td><td>Kermadec Islands, New Zealand</td><td>2026-10-24 14:02</td><td>New Zealand</td></tr>' +
+          '<tr><td>us7000abf4</td><td>4.9</td><td>Hualien County, Taiwan</td><td>2026-10-25 01:20</td><td>Taiwan</td></tr>' +
+          '<tr><td>us7000abg5</td><td>6.1</td><td>South of the Fiji Islands</td><td>2026-10-25 09:55</td><td>Fiji</td></tr>' +
+          '</tbody></table>';
+      }
+    },
+    {
+      note: 'Aggregated by region and ready for a Power BI map.',
+      html: function () {
+        return '<table class="grid goldt"><thead><tr><th>region</th><th>events</th><th>strongest</th></tr></thead><tbody>' +
+          '<tr><td>Fiji</td><td>1</td><td>6.1</td></tr>' +
+          '<tr><td>New Zealand</td><td>1</td><td>5.2</td></tr>' +
+          '<tr><td>Taiwan</td><td>2</td><td>4.9</td></tr>' +
+          '</tbody></table>';
+      }
+    }
+  ];
+
+  function show(i) {
+    body.innerHTML = views[i].html();
+    note.textContent = views[i].note;
+    tabs.forEach(function (t, n) { t.setAttribute('aria-selected', n === i ? 'true' : 'false'); });
+  }
+  tabs.forEach(function (t, n) {
+    t.addEventListener('click', function () {
+      if (timer) { clearInterval(timer); timer = null; runBtn.disabled = false; runBtn.textContent = 'Run the pipeline'; }
+      show(n);
+    });
+  });
+  runBtn.addEventListener('click', function () {
+    if (reduce) { show(2); return; }
+    var i = 0;
+    show(0);
+    runBtn.disabled = true;
+    runBtn.textContent = 'Running';
+    timer = setInterval(function () {
+      i++;
+      show(i);
+      if (i >= 2) { clearInterval(timer); timer = null; runBtn.disabled = false; runBtn.textContent = 'Run again'; }
+    }, 1700);
+  });
+  show(0);
+
+  /* ================= dashboard date ================= */
+  try {
+    document.getElementById('refreshed').textContent = new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+  } catch (err) { document.getElementById('refreshed').textContent = 'today'; }
+
+  /* ================= quick answers ================= */
+  var dlg = document.getElementById('askDlg');
+  var qList = document.getElementById('qList');
+  var answer = document.getElementById('answer');
+  var qa = [
+    { q: 'What do you do?', a: 'I\'m a Melbourne-based data engineer. I build medallion pipelines on Databricks, Azure and Microsoft Fabric, model the data as star schemas and put it in front of people through Power BI.' },
+    { q: 'What is your strongest result?', a: 'Sustaining 99%+ platform reliability at Cognizant, with validation rules, reconciliation and metadata checks on pipelines handling billions of CDC events a month.' },
+    { q: 'What are you doing right now?', a: 'An Operations Data Analyst internship at the Data & AI Institute (TDAI) since July 2026: social media, survey and web traffic analytics, plus a Python chat app that answers BigQuery questions in plain English.' },
+    { q: 'Which tools do you use most?', a: 'Databricks, Spark, Delta Lake, Microsoft Fabric, Azure Data Factory, SQL, Python and Power BI.' },
+    { q: 'Are you open to new roles?', a: 'Yes. I am looking for Data Analyst and Data Engineer roles in Melbourne.', go: 6 },
+    { q: 'How do I get in touch?', a: 'Email aashima91.gupta@gmail.com or message me on LinkedIn.', go: 6 }
+  ];
+  qa.forEach(function (item, n) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'q'; b.textContent = item.q; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function () {
+      Array.prototype.forEach.call(qList.children, function (c) { c.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      answer.textContent = item.a;
+      if (item.go !== undefined) {
+        var g = document.createElement('button');
+        g.type = 'button'; g.className = 'btn primary go-btn'; g.textContent = 'Go to contact';
+        g.addEventListener('click', function () { dlg.close(); go(item.go); });
+        answer.appendChild(document.createElement('br'));
+        answer.appendChild(g);
+      }
+    });
+    qList.appendChild(b);
+  });
+  document.getElementById('askBtn').addEventListener('click', function () {
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+  });
+  document.getElementById('askClose').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+
+  /* ================= contact form (opens the visitor's email app) ================= */
+  var form = document.getElementById('contactForm');
+  var formNote = document.getElementById('formNote');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('fName').value.trim();
+    var email = document.getElementById('fEmail').value.trim();
+    var msg = document.getElementById('fMsg').value.trim();
+    var subject = 'Portfolio enquiry from ' + name;
+    var text = msg + '\n\n' + name + '\n' + email;
+    window.location.href = 'mailto:aashima91.gupta@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
+    formNote.textContent = 'Opening your email app. If nothing opens, write to aashima91.gupta@gmail.com directly.';
+  });
+
+  /* ================= copy email ================= */
+  var copyBtn = document.getElementById('copyMail');
+  copyBtn.addEventListener('click', function () {
+    var addr = 'aashima91.gupta@gmail.com';
+    function done() { copyBtn.textContent = 'Copied'; setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1800); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(addr).then(done, function () { window.location.href = 'mailto:' + addr; });
+    } else { window.location.href = 'mailto:' + addr; }
+  });
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+})();
+</script>
 </body>
 </html>
